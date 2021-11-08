@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel = "icon" th:href="@{/img/title-hammer.png}" type = "image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/userprofile.css}"/>
+</head>
+<body>
+
+<div class="nav-container">
+    <div class="nav" th:if="${session.isEmpty()}">
+        <div class="logo">
+            <a th:href="@{/}">Special Department</a>
+        </div>
+        <ul class='navbar'>
+            <li><a href="#">About us</a></li>
+            <li><a th:href="@{/login}">Login</a></li>
+        </ul>
+    </div>
+    <div class="nav" th:unless="${session.isEmpty()}">
+        <div class="logo">
+            <a th:href="@{/}">Special Department</a>
+        </div>
+        <ul class='navbar'>
+            <li><a href="#">About us</a></li>
+            <li><a th:href="@{/profile/{sessionUserId} (sessionUserId=${sessionUserId})}">Profile</a></li>
+            <li>
+                <form name="logoutForm" th:action="@{/logout}" method="post">
+                    <button type="submit">Sign Out</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="user-profile-container">
+    <div class="user-container">
+        <div class="user-personal" th:each="data: ${userData}">
+            <img th:src="@{'/img/' + ${data.image}}" th:attr="src=@{data.image},
+                            title=${data.imageName} ,alt=${data.imageName}">
+            <h1 th:text="${data.firstName} +' '+${data.lastName} + ' (' + ${data.age} + ')'"></h1>
+            <h2>Phone number:</h2>
+            <p th:text="${data.phoneNumber}"></p>
+        </div>
+    </div>
+    <div class="user-description-container">
+        <div class="user-description" th:each="data: ${userData}">
+            <h2>Description:</h2>
+            <p th:text="${data.description}"></p>
+            <h2 id="h2-profession">Profession(s): </h2>
+            <span class="professions" th:each="profession_name, iterStat: ${data.profession}"><br>
+                    <span th:text="${profession_name} + ${!iterStat.last ? ', ': ''}"></span>
+                        </span>
+        </div>
+    </div>
+</div>
+
+<footer id="footer">
+    <hr>
+    <div class="copyright">
+        <p class="footer-text">Special Department ©</p>
+    </div>
+</footer>
+
+</body>
+</html>

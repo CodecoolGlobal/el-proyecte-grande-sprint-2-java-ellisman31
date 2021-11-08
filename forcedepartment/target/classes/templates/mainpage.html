@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel = "icon" th:href="@{/img/title-hammer.png}" type = "image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
+    <script type="text/javascript" th:src="@{/js/sidebar.js}" defer></script>
+</head>
+<body>
+
+<div class="main-container">
+
+    <header>
+        <div class="nav" th:if="${session.isEmpty()}">
+            <div class="logo">
+                <a th:href="@{/}">Special Department</a>
+            </div>
+            <ul class='navbar'>
+                <li><a href="#">About us</a></li>
+                <li><a th:href="@{/login}">Login</a></li>
+            </ul>
+        </div>
+        <div class="nav" th:unless="${session.isEmpty()}">
+            <div class="logo">
+                <a th:href="@{/}">Special Department</a>
+            </div>
+            <ul class='navbar'>
+                <li><a href="#">About us</a></li>
+                <li><a th:href="@{/profile/{sessionUserId} (sessionUserId=${sessionUserId})}">Profile</a></li>
+                <li>
+                    <form name="logoutForm" th:action="@{/logout}" method="post">
+                        <button type="submit">Sign Out</button>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </header>
+
+    <div class="web-information">
+        <h1>Welcome on the Special Department!</h1>
+        <p>You can look around and find who is the best worker(s) for your job</p><br>
+    </div>
+
+
+    <div id="worker-container" class="worker-container">
+        <hr>
+        <p id="specificWorkerText" th:text="${specificWorkers}"></p><br>
+        <hr>
+        <div id="sidebar" class="sidenav">
+            <a href="#" id="profession-search">Professions</a>
+            <div id="profession-list"></div>
+            <a href="#" id="work-objects-search">Work Objects</a>
+            <div id="work-object-list"></div>
+            <a href="#">Extra Filter</a>
+            <div id="extra-filter-list"></div>
+        </div>
+        <div id="worker-card-container">
+            <div class="worker-card" th:each="worker: ${workersByRating}">
+                <div class="worker-detail">
+                    <a th:href="@{/profile/{userId} (userId=${worker.userId})}">
+                        <img th:src="@{'/img/' + ${worker.image}}" th:attr="src=@{worker.image},
+                        title=${worker.imageName} ,alt=${worker.imageName}">
+                        <br>
+                        <h3 th:text="${worker.firstName} +' '+${worker.lastName} + ' (' +${worker.age} + ')' "></h3><br>
+                        <h4>Profession(s): </h4>
+                        <span class="professions" th:each="profession_name, iterStat: ${worker.profession}">
+            <span th:text="${profession_name} + ${!iterStat.last ? ', ': ''}"></span>
+        </span><br><br>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer id="footer">
+        <hr>
+        <div class="copyright">
+            <p class="footer-text">Special Department ©</p>
+        </div>
+    </footer>
+
+</body>
+</html>

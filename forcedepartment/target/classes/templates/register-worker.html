@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel = "icon" th:href="@{/img/title-hammer.png}" type = "image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/register.css}"/>
+    <title th:text="${title}"></title>
+</head>
+<body>
+
+<div class="register-form">
+    <h1>Just a few steps left..</h1>
+    <form th:action="@{/register/worker}" method="post" th:object="${ProfessionObject}">
+        <hr>
+        <p>Give some information about yourself</p>
+        <textarea id="description" name="description" placeholder="Click on the area to write.."
+                  required></textarea>
+        <p>Enter your phone number</p>
+        <input type="text" name="phone_number" placeholder="+36.." required>
+<!--        <p>Choose your profession</p>-->
+<!--        <div class="profession-select">-->
+<!--            <select id="professionName" name="professionName" th:field="${ProfessionObject.professionName}" required>-->
+<!--                <option th:value="${profession}" th:each="profession: ${professions}"-->
+<!--                        th:field="${ProfessionObject.professionName}" th:text="${profession}"></option>-->
+<!--            </select>-->
+<!--        </div>-->
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

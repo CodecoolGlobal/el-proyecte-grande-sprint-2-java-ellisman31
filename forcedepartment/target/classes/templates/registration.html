@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel = "icon" th:href="@{/img/title-hammer.png}" type = "image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/register.css}"/>
+    <title th:text="${title}"></title>
+</head>
+<body>
+
+<div class="register-form">
+    <h1>Registration</h1>
+    <p id="wrongLogin" th:if="!${isCorrectEmail}" th:text="${emailExist}"></p>
+    <p id="wrongLogin" th:if="!${isCorrectPassword}" th:text="${wrongPassword}"></p>
+    <form th:action="@{/register}" th:object="${User}" method="post">
+        <hr>
+        <input type="text" id="firstName" name="lastName" placeholder="First Name" th:field="*{firstName}" required>
+
+        <input type="text" id="lastName" name="lastName" placeholder="Last Name" th:field="*{lastName}" required>
+
+        <input type="text" id="email" name="email" placeholder="Email address" th:field="*{email}" required>
+
+        <input type="date" id="userBirthOfDate" name="userBirthOfDate" placeholder="Birth of date" th:field="*{birthOfDate}" required>
+
+        <div class="password">
+            <input type="password" id="password" name="password" placeholder="Password" th:field="*{password}" required>
+            <input type="password" id="passwordAgain" name="passwordAgain" placeholder="Password again" required>
+        </div>
+
+        <span class="userType" th:each="group: ${UserTypes}">
+            <input type="radio" th:value="${group}" th:field="*{userType}" id="radio" name="groupType" required/>
+            <label for="radio" class="radio" th:text="${group}"></label>
+        </span>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="mainPageHref">
+        <a href="/"><button type="button">Main page</button></a>
+    </div>
+</div>
+
+</body>
+</html>
